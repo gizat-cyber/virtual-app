@@ -89,7 +89,7 @@ export default function AIWorkspace() {
   // Voice recording
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
-  const recordingInterval = useRef<NodeJS.Timeout>();
+  const recordingInterval = useRef<NodeJS.Timeout | null>(null);
   
   // Формы
   const [showDocumentForm, setShowDocumentForm] = useState(false);
@@ -293,6 +293,7 @@ export default function AIWorkspace() {
     setIsRecording(false);
     if (recordingInterval.current) {
       clearInterval(recordingInterval.current);
+      recordingInterval.current = null;
     }
 
     // Имитация транскрипции
