@@ -1,103 +1,135 @@
-import Image from "next/image";
+import Link from "next/link";
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  mvpFunction: string;
+  tags: string[];
+  status: "В разработке" | "MVP готов" | "Завершен";
+}
+
+const projects: Project[] = [
+  {
+    id: "todo-app",
+    title: "Todo App",
+    description: "Простое приложение для управления задачами с возможностью добавления, редактирования и удаления задач.",
+    mvpFunction: "Создание и отметка выполнения задач",
+    tags: ["React", "Local Storage", "CRUD"],
+    status: "MVP готов"
+  },
+  {
+    id: "weather-widget",
+    title: "Виджет погоды",
+    description: "Виджет для отображения текущей погоды с геолокацией пользователя.",
+    mvpFunction: "Показ текущей температуры и условий погоды",
+    tags: ["API", "Геолокация", "Real-time"],
+    status: "В разработке"
+  },
+  {
+    id: "calculator",
+    title: "Калькулятор",
+    description: "Веб-калькулятор с базовыми математическими операциями и красивым интерфейсом.",
+    mvpFunction: "Выполнение базовых математических операций",
+    tags: ["JavaScript", "UI/UX", "Math"],
+    status: "MVP готов"
+  },
+  {
+    id: "color-palette",
+    title: "Генератор палитр",
+    description: "Инструмент для создания цветовых палитр с возможностью экспорта в различные форматы.",
+    mvpFunction: "Генерация и копирование цветовых кодов",
+    tags: ["Design", "Color Theory", "Export"],
+    status: "В разработке"
+  }
+];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Header */}
+        <header className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+            Портфолио MVP Проектов
+          </h1>
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            Коллекция минимально жизнеспособных продуктов, созданных для изучения и демонстрации различных технологий
+          </p>
+        </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-slate-200 dark:border-slate-700"
+            >
+              <div className="p-6">
+                {/* Status Badge */}
+                <div className="flex justify-between items-start mb-4">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      project.status === "MVP готов"
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                        : project.status === "В разработке"
+                        ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                        : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                    }`}
+                  >
+                    {project.status}
+                  </span>
+                </div>
+
+                {/* Project Info */}
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                  {project.title}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-400 mb-4 text-sm leading-relaxed">
+                  {project.description}
+                </p>
+
+                {/* MVP Function */}
+                <div className="mb-4">
+                  <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                    MVP функция:
+                  </h4>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 italic">
+                    {project.mvpFunction}
+                  </p>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded text-xs"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Action Button */}
+                <Link
+                  href={`/projects/${project.id}`}
+                  className="block w-full text-center bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 py-2 px-4 rounded-lg font-medium hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors duration-200"
+                >
+                  Открыть проект
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Footer */}
+        <footer className="mt-16 text-center">
+          <p className="text-slate-500 dark:text-slate-500 text-sm">
+            Каждый проект представляет собой отдельную страницу с полностью функциональным MVP
+          </p>
+        </footer>
+      </div>
     </div>
   );
 }
