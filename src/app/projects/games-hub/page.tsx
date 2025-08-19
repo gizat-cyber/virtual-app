@@ -41,7 +41,7 @@ const SnakeGame = ({ onScoreUpdate, onGameEnd }: { onScoreUpdate: (score: number
   const [gameState, setGameState] = useState<'waiting' | 'playing' | 'paused' | 'gameOver'>('waiting');
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
-  const gameLoopRef = useRef<number>();
+  const gameLoopRef = useRef<number | undefined>(undefined);
 
   // Состояние игры
   const [snake, setSnake] = useState([{ x: 10, y: 10 }]);
@@ -322,7 +322,7 @@ const MemoryGame = ({ onScoreUpdate, onGameEnd }: { onScoreUpdate: (score: numbe
   const [matches, setMatches] = useState(0);
   const [gameState, setGameState] = useState<'waiting' | 'playing' | 'completed'>('waiting');
   const [timeElapsed, setTimeElapsed] = useState(0);
-  const timerRef = useRef<number>();
+  const timerRef = useRef<number | undefined>(undefined);
 
   const emojis = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'];
   const TOTAL_PAIRS = 8;
@@ -632,7 +632,7 @@ const Game2048 = ({ onScoreUpdate, onGameEnd }: { onScoreUpdate: (score: number)
     
     // Проверяем победу (2048)
     const hasWon = finalBoard.some(row => row.some(cell => cell === 2048));
-    if (hasWon && gameState !== 'won') {
+    if (hasWon && gameState === 'playing') {
       setGameState('won');
     }
     
